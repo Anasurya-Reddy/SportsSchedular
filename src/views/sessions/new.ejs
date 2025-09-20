@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>New Session</title><link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /></head>
+<body>
+	<h2>New Session</h2>
+	<form method="post" action="/sessions">
+	<label>Sport
+		<select name="sportId" required>
+			<% if (sports && sports.length > 0) { %>
+				<% sports.forEach(s => { %>
+					<option value="<%= s._id %>"><%= s.name %></option>
+				<% }) %>
+			<% } else { %>
+				<option value="">No sports available</option>
+			<% } %>
+		</select>
+	</label>
+	<!-- Debug info -->
+	<p>Debug: <%= sports ? sports.length : 'sports is undefined' %> sports found</p>
+		<label>Date & Time <input type="datetime-local" name="startsAt" required></label>
+		<label>Venue <input type="text" name="venue" required></label>
+		<label>Looking For (number) <input type="number" name="lookingForCount" min="0" value="0" required></label>
+		<button type="submit">Create</button>
+	</form>
+	<p><a href="/sessions">Back</a></p>
+</body>
+</html>
+
+
+
+

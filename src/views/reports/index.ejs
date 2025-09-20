@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Reports</title><link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /></head>
+<body>
+	<h2>Reports Dashboard</h2>
+	
+	<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+		<div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+			<h3>Session Statistics</h3>
+			<p><strong>Total Sessions:</strong> <%= stats.sessions.total %></p>
+			<p><strong>Active Sessions:</strong> <%= stats.sessions.active %></p>
+			<p><strong>Cancelled Sessions:</strong> <%= stats.sessions.cancelled %></p>
+			<p><strong>Completed Sessions:</strong> <%= stats.sessions.completed %></p>
+		</div>
+		
+		<div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+			<h3>User Statistics</h3>
+			<p><strong>Total Users:</strong> <%= stats.users.total %></p>
+			<p><strong>Admins:</strong> <%= stats.users.admins %></p>
+			<p><strong>Players:</strong> <%= stats.users.players %></p>
+		</div>
+	</div>
+
+	<h3>Sports Statistics</h3>
+	<ul>
+		<% stats.sports.forEach(sport => { %>
+			<li><%= sport.name %>: <%= sport.sessionCount %> sessions</li>
+		<% }) %>
+	</ul>
+
+	<h3>Recent Sessions</h3>
+	<ul>
+		<% recentSessions.forEach(session => { %>
+			<li>
+				<%= session.sportId.name %> - <%= new Date(session.startsAt).toLocaleString() %> 
+				@ <%= session.venue %> 
+				(<%= session.status %>)
+			</li>
+		<% }) %>
+	</ul>
+
+	<p><a href="/">Home</a></p>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Sign up</title>
+	<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+	<h2>Sign up</h2>
+	<% if (flash.error && flash.error.length) { %>
+		<p style="color:red"><%= flash.error[0] %></p>
+	<% } %>
+	<form method="post" action="/auth/signup">
+		<label>Name <input type="text" name="name" required></label>
+		<label>Email <input type="email" name="email" required></label>
+		<label>Password <input type="password" name="password" required></label>
+		<button type="submit">Create account</button>
+	</form>
+	<p>Already have an account? <a href="/auth/login">Login</a></p>
+</body>
+</html>
+
+
+
+

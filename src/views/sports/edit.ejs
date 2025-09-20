@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Edit Sport</title><link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /></head>
+<body>
+	<h2>Edit Sport</h2>
+	<form method="post" action="/sports/<%= sport._id %>">
+		<label>Name <input type="text" name="name" value="<%= sport.name %>" required></label>
+		<button type="submit">Save</button>
+	</form>
+	<p><a href="/sports">Back</a></p>
+</body>
+</html>
+
+
+
+

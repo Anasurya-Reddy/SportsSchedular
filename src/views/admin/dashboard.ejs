@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sports Scheduler</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #dc3545 0%, #6f42c1 100%);
+            color: white;
+            padding: 60px 0 40px 0;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid;
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card.danger { border-left-color: #dc3545; }
+        .stat-card.success { border-left-color: #28a745; }
+        .stat-card.warning { border-left-color: #ffc107; }
+        .stat-card.info { border-left-color: #17a2b8; }
+        
+        .request-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .session-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        
+        .sport-stat {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/admin/dashboard">
+                <i class="fas fa-crown me-2"></i>Sports Scheduler Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/dashboard">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/sessions">
+                            <i class="fas fa-calendar me-1"></i>Sessions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/sports">
+                            <i class="fas fa-futbol me-1"></i>Sports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/requests">
+                            <i class="fas fa-handshake me-1"></i>Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">
+                            <i class="fas fa-users me-1"></i>Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/reports">
+                            <i class="fas fa-chart-bar me-1"></i>Reports
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <span class="navbar-text me-3">
+                            <i class="fas fa-crown me-1"></i>Admin: <%= admin.name %>
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <form action="/auth/logout" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-outline-light btn-sm">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="fas fa-crown me-3"></i>Admin Dashboard
+                    </h1>
+                    <p class="lead mb-0">Welcome back, <%= admin.name %>! Manage your sports platform</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="/sessions/new" class="btn btn-light btn-lg">
+                        <i class="fas fa-plus me-2"></i>Create Session
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Flash Messages -->
+        <% if (flash.success && flash.success.length > 0) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i><%= flash.success[0] %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <% } %>
+
+        <% if (flash.error && flash.error.length > 0) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i><%= flash.error[0] %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <% } %>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-5">
+            <div class="col-md-3 mb-4">
+                <div class="stat-card danger">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="fw-bold text-danger"><%= stats.requests %></h3>
+                            <p class="text-muted mb-0">Pending Requests</p>
+                        </div>
+                        <i class="fas fa-clock fa-2x text-danger"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stat-card success">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="fw-bold text-success"><%= stats.users.total %></h3>
+                            <p class="text-muted mb-0">Total Users</p>
+                        </div>
+                        <i class="fas fa-users fa-2x text-success"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stat-card warning">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="fw-bold text-warning"><%= stats.sessions.active %></h3>
+                            <p class="text-muted mb-0">Active Sessions</p>
+                        </div>
+                        <i class="fas fa-calendar-check fa-2x text-warning"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stat-card info">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="fw-bold text-info"><%= stats.sports %></h3>
+                            <p class="text-muted mb-0">Sports Available</p>
+                        </div>
+                        <i class="fas fa-futbol fa-2x text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Pending Requests -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">
+                            <i class="fas fa-clock me-2"></i>Pending Requests (<%= pendingRequests.length %>)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (pendingRequests.length === 0) { %>
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-check-circle fa-3x mb-3 text-success"></i>
+                                <p>All requests have been processed!</p>
+                            </div>
+                        <% } else { %>
+                            <% pendingRequests.forEach(request => { %>
+                                <div class="request-card">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h6 class="fw-bold mb-1">
+                                                <i class="fas fa-user me-2"></i>
+                                                <%= request.userId.name %>
+                                            </h6>
+                                            <p class="text-muted mb-1">
+                                                <i class="fas fa-futbol me-2"></i>
+                                                <%= request.sessionId.sportId.name %>
+                                            </p>
+                                            <p class="text-muted mb-1">
+                                                <i class="fas fa-calendar me-2"></i>
+                                                <%= new Date(request.sessionId.startsAt).toLocaleDateString() %>
+                                            </p>
+                                            <small class="text-muted">
+                                                Requested: <%= new Date(request.requestedAt).toLocaleDateString() %>
+                                            </small>
+                                        </div>
+                                        <div class="btn-group-vertical">
+                                            <form method="POST" action="/requests/<%= request._id %>/approve" class="d-inline">
+                                                <button type="submit" class="btn btn-success btn-sm mb-1">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="/requests/<%= request._id %>/reject" class="d-inline">
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }) %>
+                            <div class="text-center">
+                                <a href="/admin/requests" class="btn btn-outline-warning">
+                                    Manage All Requests
+                                </a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Sessions -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-calendar me-2"></i>Recent Sessions
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (recentSessions.length === 0) { %>
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-calendar-plus fa-3x mb-3"></i>
+                                <p>No sessions created yet</p>
+                                <a href="/sessions/new" class="btn btn-primary">Create First Session</a>
+                            </div>
+                        <% } else { %>
+                            <% recentSessions.forEach(session => { %>
+                                <div class="session-card">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h6 class="fw-bold mb-1">
+                                                <i class="fas fa-futbol me-2 text-primary"></i>
+                                                <%= session.sportId.name %>
+                                            </h6>
+                                            <p class="text-muted mb-1">
+                                                <i class="fas fa-calendar me-2"></i>
+                                                <%= new Date(session.startsAt).toLocaleDateString() %>
+                                            </p>
+                                            <p class="text-muted mb-1">
+                                                <i class="fas fa-map-marker-alt me-2"></i>
+                                                <%= session.venue %>
+                                            </p>
+                                            <span class="badge bg-<%= session.status === 'scheduled' ? 'success' : session.status === 'cancelled' ? 'danger' : 'warning' %>">
+                                                <%= session.status.charAt(0).toUpperCase() + session.status.slice(1) %>
+                                            </span>
+                                        </div>
+                                        <a href="/sessions/<%= session._id %>" class="btn btn-outline-primary btn-sm">
+                                            View
+                                        </a>
+                                    </div>
+                                </div>
+                            <% }) %>
+                            <div class="text-center">
+                                <a href="/admin/sessions" class="btn btn-outline-primary">
+                                    Manage All Sessions
+                                </a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports Statistics -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-bar me-2"></i>Sports Statistics
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (sportStats.length === 0) { %>
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-futbol fa-3x mb-3"></i>
+                                <p>No sports available</p>
+                                <a href="/admin/sports" class="btn btn-info">Add Sports</a>
+                            </div>
+                        <% } else { %>
+                            <div class="row">
+                                <% sportStats.forEach(sport => { %>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="sport-stat">
+                                            <h6 class="fw-bold mb-2">
+                                                <i class="fas fa-futbol me-2 text-info"></i>
+                                                <%= sport.name %>
+                                            </h6>
+                                            <div class="row text-center">
+                                                <div class="col-6">
+                                                    <div class="fw-bold text-primary"><%= sport.sessionCount %></div>
+                                                    <small class="text-muted">Sessions</small>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="fw-bold text-success"><%= sport.requestCount %></div>
+                                                    <small class="text-muted">Requests</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-bolt me-2"></i>Quick Actions
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2 mb-3">
+                                <a href="/sessions/new" class="btn btn-primary w-100">
+                                    <i class="fas fa-plus me-2"></i>New Session
+                                </a>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <a href="/sports/new" class="btn btn-info w-100">
+                                    <i class="fas fa-futbol me-2"></i>Add Sport
+                                </a>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <a href="/admin/requests" class="btn btn-warning w-100">
+                                    <i class="fas fa-handshake me-2"></i>Requests
+                                </a>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <a href="/admin/users" class="btn btn-secondary w-100">
+                                    <i class="fas fa-users me-2"></i>Users
+                                </a>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <a href="/admin/reports" class="btn btn-success w-100">
+                                    <i class="fas fa-chart-bar me-2"></i>Reports
+                                </a>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <a href="/" class="btn btn-outline-dark w-100">
+                                    <i class="fas fa-home me-2"></i>Public Site
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

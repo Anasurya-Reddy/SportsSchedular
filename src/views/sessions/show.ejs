@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Session</title><link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /></head>
+<body>
+	<h2><%= session.sportId.name %> session</h2>
+	<p>
+		<strong>When:</strong> <%= new Date(session.startsAt).toLocaleString() %><br>
+		<strong>Where:</strong> <%= session.venue %><br>
+		<strong>Status:</strong> <%= session.status %>
+	</p>
+	<% if (session.status === 'cancelled' && session.cancelReason) { %>
+		<p style="color:red"><strong>Cancelled:</strong> <%= session.cancelReason %></p>
+	<% } %>
+
+	<h3>Participants</h3>
+	<ul>
+		<% participants.forEach(p => { %>
+			<li><%= p.userId.name %> <%= p.teamSlot ? '(' + p.teamSlot + ')' : '' %></li>
+		<% }) %>
+	</ul>
+
+	<% if (currentUser) { %>
+		<% 
+			// Check if user has already requested to join this session
+			let userRequest = null;
+			if (participants) {
+				userRequest = participants.find(p => p.userId._id.toString() === currentUser._id.toString());
+			}
+		%>
+		
+		<% if (!userRequest) { %>
+			<form method="post" action="/sessions/<%= session._id %>/join">
+				<button type="submit" class="btn btn-primary">Request to Join</button>
+			</form>
+		<% } else { %>
+			<% if (userRequest.status === 'pending') { %>
+				<div class="alert alert-warning">
+					<strong>Request Pending:</strong> Your request to join this session is pending admin approval.
+				</div>
+			<% } else if (userRequest.status === 'approved') { %>
+				<div class="alert alert-success">
+					<strong>Approved:</strong> You are approved to join this session!
+				</div>
+			<% } else if (userRequest.status === 'rejected') { %>
+				<div class="alert alert-danger">
+					<strong>Rejected:</strong> Your request to join this session was rejected.
+				</div>
+			<% } %>
+		<% } %>
+		
+		<% if (session.createdById.toString() === currentUser._id.toString() && session.status !== 'cancelled') { %>
+			<form method="post" action="/sessions/<%= session._id %>/cancel">
+				<label>Reason <input type="text" name="reason"></label>
+				<button type="submit">Cancel session</button>
+			</form>
+		<% } %>
+	<% } %>
+
+	<p><a href="/sessions">Back</a></p>
+</body>
+</html>
+
+
+
+

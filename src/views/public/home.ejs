@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Scheduler - Join Sports Sessions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+        }
+        .feature-card {
+            transition: transform 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #6f42c1 100%);
+            border: none;
+        }
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c82333 0%, #5a2d91 100%);
+        }
+        .stats-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-trophy me-2"></i>Sports Scheduler
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/auth/user-login">
+                                <i class="fas fa-user me-2"></i>User Login
+                            </a></li>
+                            <li><a class="dropdown-item" href="/auth/admin-login">
+                                <i class="fas fa-crown me-2"></i>Admin Login
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-plus me-1"></i>Sign Up
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/auth/user-signup">
+                                <i class="fas fa-user me-2"></i>Join as Player
+                            </a></li>
+                            <li><a class="dropdown-item" href="/auth/admin-signup">
+                                <i class="fas fa-crown me-2"></i>Admin Access
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Welcome to Sports Scheduler</h1>
+            <p class="lead mb-4">The ultimate platform for organizing, joining, and managing sports sessions with ease</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="/auth/user-signup" class="btn btn-primary btn-lg">
+                    <i class="fas fa-user-plus me-2"></i>Join as Player
+                </a>
+                <a href="/auth/admin-signup" class="btn btn-danger btn-lg">
+                    <i class="fas fa-crown me-2"></i>Admin Access
+                </a>
+                <a href="#features" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-info-circle me-2"></i>Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h3 class="fw-bold">500+</h3>
+                        <p class="text-muted">Active Players</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-check fa-3x text-success mb-3"></i>
+                        <h3 class="fw-bold">1000+</h3>
+                        <p class="text-muted">Sessions Scheduled</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <i class="fas fa-futbol fa-3x text-warning mb-3"></i>
+                        <h3 class="fw-bold">15+</h3>
+                        <p class="text-muted">Sports Available</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <i class="fas fa-star fa-3x text-danger mb-3"></i>
+                        <h3 class="fw-bold">4.9/5</h3>
+                        <p class="text-muted">User Rating</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="container my-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Why Choose Sports Scheduler?</h2>
+            <p class="lead text-muted">Discover the features that make us the best choice for sports session management</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-calendar-plus fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Easy Session Creation</h5>
+                        <p class="card-text">Admins can effortlessly create and manage sports sessions with detailed information including date, time, venue, and requirements.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-handshake fa-3x text-success"></i>
+                        </div>
+                        <h5 class="card-title">Request-Based Joining</h5>
+                        <p class="card-text">Players can request to join sessions, and admins can approve or reject requests to ensure quality participation.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-chart-line fa-3x text-info"></i>
+                        </div>
+                        <h5 class="card-title">Comprehensive Reports</h5>
+                        <p class="card-text">Track session statistics, user participation, popular sports, and generate detailed reports for better management.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-shield-alt fa-3x text-warning"></i>
+                        </div>
+                        <h5 class="card-title">Role-Based Access</h5>
+                        <p class="card-text">Separate dashboards and permissions for players and admins ensure secure and organized session management.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-mobile-alt fa-3x text-danger"></i>
+                        </div>
+                        <h5 class="card-title">Mobile Responsive</h5>
+                        <p class="card-text">Access your dashboard and manage sessions on any device with our fully responsive design.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-clock fa-3x text-secondary"></i>
+                        </div>
+                        <h5 class="card-title">Real-Time Updates</h5>
+                        <p class="card-text">Get instant notifications about session updates, request approvals, and important announcements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">How It Works</h2>
+                <p class="lead text-muted">Simple steps to get started with Sports Scheduler</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 text-center mb-4">
+                    <div class="mb-3">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="fs-2 fw-bold">1</span>
+                        </div>
+                    </div>
+                    <h4>Sign Up</h4>
+                    <p>Create your account as a player or admin. Admins need a special code for registration.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="mb-3">
+                        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="fs-2 fw-bold">2</span>
+                        </div>
+                    </div>
+                    <h4>Create or Join</h4>
+                    <p>Admins create sessions, players request to join. Simple and organized process.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="mb-3">
+                        <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="fs-2 fw-bold">3</span>
+                        </div>
+                    </div>
+                    <h4>Play & Enjoy</h4>
+                    <p>Once approved, participate in sessions and enjoy your favorite sports activities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="hero-section">
+        <div class="container text-center">
+            <h2 class="display-5 fw-bold mb-4">Ready to Get Started?</h2>
+            <p class="lead mb-4">Join thousands of players and start scheduling your sports sessions today!</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="/auth/user-signup" class="btn btn-primary btn-lg">
+                    <i class="fas fa-rocket me-2"></i>Start Playing
+                </a>
+                <a href="/auth/admin-login" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-sign-in-alt me-2"></i>Admin Login
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-trophy me-2"></i>Sports Scheduler</h5>
+                    <p class="text-muted">The ultimate platform for sports session management.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-muted">&copy; 2024 Sports Scheduler. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

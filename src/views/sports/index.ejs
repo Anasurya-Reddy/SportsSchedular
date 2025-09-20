@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Sports</title><link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /></head>
+<body>
+	<h2>Sports</h2>
+	<a href="/sports/new">Create Sport</a>
+	<ul>
+		<% sports.forEach(s => { %>
+			<li>
+				<%= s.name %> - <a href="/sports/<%= s._id %>/edit">Edit</a>
+			</li>
+		<% }) %>
+	</ul>
+	<p><a href="/">Home</a></p>
+</body>
+</html>
+
+
+
+
