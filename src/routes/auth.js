@@ -41,7 +41,8 @@ router.post('/user-signup', async (req, res) => {
 			return res.redirect('/auth/user-signup');
 		}
 		const passwordHash = await bcrypt.hash(password, 10);
-		await User.create({ name, email, passwordHash, role: 'player' });
+        const newUser = await User.create({ name, email, passwordHash, role: 'player' });
+        console.log('New user created (player):', newUser);
 		req.flash('success', 'Account created. Please login.');
 		res.redirect('/auth/user-login');
 	} catch (e) {
@@ -93,7 +94,8 @@ router.post('/admin-signup', async (req, res) => {
 			return res.redirect('/auth/admin-signup');
 		}
 		const passwordHash = await bcrypt.hash(password, 10);
-		await User.create({ name, email, passwordHash, role: 'admin' });
+        const newAdmin = await User.create({ name, email, passwordHash, role: 'admin' });
+        console.log('New user created (admin):', newAdmin);
 		req.flash('success', 'Admin account created. Please login.');
 		res.redirect('/auth/admin-login');
 	} catch (e) {

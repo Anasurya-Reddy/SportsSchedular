@@ -32,6 +32,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 
+// Serve static files (CSS, JS, images) from src/public
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET || 'change-me',

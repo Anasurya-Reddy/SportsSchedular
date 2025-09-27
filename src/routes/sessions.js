@@ -79,8 +79,19 @@ router.get('/:id', requireAuth, async (req, res) => {
 
 router.post('/:id/join', requireAuth, async (req, res) => {
 	try {
+		// Check if user is a player (not admin)
+		if (req.user.role !== 'player') {
+			req.flash('error', 'Only players can request to join sessions');
+			return res.redirect(`/sessions/${req.params.id}`);
+		}
+
 		const session = await Session.findById(req.params.id);
 		if (!session) return res.status(404).render('404');
+
+		if (session.status === 'cancelled') {
+			req.flash('error', 'Cannot join cancelled sessions');
+			return res.redirect('/sessions');
+		}
 
 		if (new Date(session.startsAt) <= new Date()) {
 			req.flash('error', 'Cannot join past sessions');
@@ -123,15 +134,22 @@ router.post('/:id/join', requireAuth, async (req, res) => {
 
 router.post('/:id/cancel', requireAuth, async (req, res) => {
 	try {
+		// Check if user is admin
+		if (req.user.role !== 'admin') {
+			req.flash('error', 'Only administrators can cancel sessions');
+			return res.redirect(`/sessions/${req.params.id}`);
+		}
+
 		const session = await Session.findById(req.params.id);
 		if (!session) return res.status(404).render('404');
 
-		if (session.createdById.toString() !== req.user._id.toString()) {
-			return res.status(401).render('401');
+		if (session.status === 'cancelled') {
+			req.flash('error', 'Session is already cancelled');
+			return res.redirect(`/sessions/${session._id}`);
 		}
 
 		session.status = 'cancelled';
-		session.cancelReason = req.body.reason || 'Cancelled by creator';
+		session.cancelReason = req.body.reason || 'Cancelled by admin';
 		await session.save();
 
 		req.flash('success', 'Session cancelled successfully');
