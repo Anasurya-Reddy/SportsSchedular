@@ -3,7 +3,7 @@
 Build and play. SportsScheduler is a web app for organizing casual sport sessions with two personas: administrators and players. Admins configure available sports and view reports; players sign up, create sessions, and join matches.
 
 ### Live App
-- URL: `https://your-render-app-url.com` (replace with the deployed URL)
+- URL: `https://sportsschedular-1v6v.onrender.com/` (replace with the deployed URL)
 
 ### Demo Video
 - Link: `https://your-demo-video-link` (Loom/YouTube/Vimeo)
@@ -31,12 +31,7 @@ Use this checklist to track completion. Update as you build.
 - [ ] **Players can view and join sessions**: cannot join past sessions; see joined and available separately
 - [ ] **Admins can create and join sessions**: same as players
 - [ ] **Players can cancel their created sessions**: with reason; visible to previous joiners; clearly marked
-- [ ] **Admin reports**: sessions played in a period; popularity by sport
-
-Optional enhancements:
-
-- [ ] **Change password** for all users
-- [ ] **Conflict warnings** when attempting to join overlapping sessions
+- [ ] **Admin reports**: sessions played in a period; popularity by spor
 
 ---
 
@@ -55,10 +50,9 @@ Adapt this section to your implementation.
 
 - **Backend**: Node.js + Express (or your chosen backend)
 - **Auth**: Sessions or JWTs, role-based authorization (`admin`, `player`)
-- **Database**: PostgreSQL (or SQLite/MySQL)
-- **ORM**: Prisma/Sequelize/TypeORM/Knex
+- **Database**: MongoDB
 - **Frontend**: React/Vite/Next.js (or server-rendered views like EJS/Handlebars)
-- **Deployment**: Render (web service + managed PostgreSQL)
+- **Deployment**: Render (web service + managed MongoDB)
 
 ---
 
@@ -208,10 +202,6 @@ Document design choices and tricky parts here. For example:
 
 ---
 
-## License
-Add your preferred license here (e.g., MIT) or keep proprietary during the course.
-
----
 
 ## Notes for Reviewers
 - Repository kept private until submission as per course guidelines. It will be made public before sharing on the LMS.
