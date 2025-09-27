@@ -6,7 +6,7 @@ Build and play. SportsScheduler is a web app for organizing casual sport session
 - URL: `https://sportsschedular-1v6v.onrender.com/` (replace with the deployed URL)
 
 ### Demo Video
-- Link: `https://your-demo-video-link` (Loom/YouTube/Vimeo)
+- Link: `https://youtu.be/sgYWH2WrrTA?si=VOgCxNOKL1AVLPCB` (Loom/YouTube/Vimeo)
 
 ### Screenshots
 Add images to the repo (e.g., `docs/screenshots/`) and reference them below.
